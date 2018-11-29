@@ -30,7 +30,7 @@ export class LoginscreenComponent implements OnInit {
 
   ngOnInit() {
     this.afStore.collection('info').doc('info').get().subscribe(x => {
-      if (x.data()['startdate'].toDate().getTime() > new Date().getTime()){
+      if (x.data()['startdate'].toDate().getTime() > new Date().getTime()) {
         this.route.navigate(['/home']);
       } else {
         this.hide = false;
