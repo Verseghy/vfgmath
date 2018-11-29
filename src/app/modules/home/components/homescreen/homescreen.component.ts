@@ -12,6 +12,7 @@ import { format } from 'date-fns/esm';
 export class HomescreenComponent implements OnInit {
 
   time: string;
+  hide = true;
 
   constructor(
     private afStore: AngularFirestore,
@@ -20,6 +21,8 @@ export class HomescreenComponent implements OnInit {
 
   ngOnInit() {
     this.afStore.collection('info').doc('info').get().subscribe(x => {
+      this.hide = false;
+
       if (x.data()['startdate'].toDate().getTime() > new Date().getTime()) {
         interval(1000).subscribe(() => {
           const date = new Date(x.data()['startdate'].toDate().getTime() - new Date().getTime());

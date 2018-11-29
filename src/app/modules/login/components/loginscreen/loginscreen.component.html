@@ -1,4 +1,4 @@
-<div class="loginbox">
+<div class="loginbox" *ngIf="!hide">
   <img src="assets/images/logo.svg" alt="" class="image">
   <span class="logintext">Bejelentkezés</span>
   <form [formGroup]="loginForm" class="form" (ngSubmit)="onSubmit()">

@@ -11,6 +11,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class LoginscreenComponent implements OnInit {
 
+  hide = true;
+
   loginForm = new FormGroup({
     username: new FormControl(
       { value: '', disabled: false }, [Validators.required]
@@ -30,6 +32,8 @@ export class LoginscreenComponent implements OnInit {
     this.afStore.collection('info').doc('info').get().subscribe(x => {
       if (x.data()['startdate'].toDate().getTime() > new Date().getTime()){
         this.route.navigate(['/home']);
+      } else {
+        this.hide = false;
       }
     });
     this.afAuth.authState.subscribe(x => {
