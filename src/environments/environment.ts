@@ -11,7 +11,7 @@ export const environment = {
     projectId: 'vfgmath',
     storageBucket: 'vfgmath.appspot.com',
     messagingSenderId: '648717635240'
-  };
+  }
 };
 
 /*
