@@ -1,0 +1,22 @@
+<div class="loginbox">
+  <img src="assets/images/logo.svg" alt="" class="image">
+  <span class="logintext">Bejelentkezés</span>
+  <form [formGroup]="loginForm" class="form" (ngSubmit)="onSubmit()">
+      <mdc-form-field>
+        <mdc-text-field formControlName="username" label="Felhasználónév" outlined [helperText]="formHelperUsername" required minlength="3"></mdc-text-field>
+        <mdc-text-field-helper-text #formHelperUsername="mdcHelperText" validation>
+          <span *ngIf="loginForm.controls['username'].hasError('required')">Felhasználónév kötelező</span>
+          <span *ngIf="loginForm.controls['username'].hasError('minlength')">Felhasználónév nem elég hosszú</span>
+        </mdc-text-field-helper-text>
+
+        <mdc-text-field formControlName="password" label="Jelszó" type="password" outlined [helperText]="formHelperPassword" required minlength="3"></mdc-text-field>
+        <mdc-text-field-helper-text #formHelperPassword="mdcHelperText" validation>
+          <span *ngIf="loginForm.controls['password'].hasError('required')">Jelszó kötelező</span>
+          <span *ngIf="loginForm.controls['password'].hasError('minlength')">Jelszó nem elég hosszú</span>
+        </mdc-text-field-helper-text>
+
+        <button mdc-button primary outlined type="submit" [disabled]="!loginForm.valid">Bejelentkezés</button>
+      </mdc-form-field>
+    </form>
+
+</div>
