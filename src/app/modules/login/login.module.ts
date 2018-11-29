@@ -1,3 +1,4 @@
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,7 +13,7 @@ const routes: Routes = [
     path: '',
     component: LoginscreenComponent
   }
-]
+];
 
 @NgModule({
   declarations: [LoginscreenComponent],
@@ -24,7 +25,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MdcButtonModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ]
 })
 export class LoginModule { }

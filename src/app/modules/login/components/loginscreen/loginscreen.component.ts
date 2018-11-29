@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-loginscreen',
@@ -21,15 +22,21 @@ export class LoginscreenComponent implements OnInit {
 
   constructor(
     private afAuth: AngularFireAuth,
+    private afStore: AngularFirestore,
     private route: Router
   ) { }
 
   ngOnInit() {
+    this.afStore.collection('info').doc('info').get().subscribe(x => {
+      if (x.data()['startdate'].toDate().getTime() > new Date().getTime()){
+        // this.route.navigateByUrl('/home');
+      }
+    });
     this.afAuth.authState.subscribe(x => {
       if (x) {
-        this.route.navigate(['test']);
+        console.log(x);
       }
-    })
+    });
   }
 
   onSubmit() {
