@@ -7,7 +7,7 @@
         <span *ngIf="teamForm.controls['teamname'].hasError('minlength')">Felhasználónév nem elég hosszú</span>
       </mdc-text-field-helper-text>
 
-      <div class="members" *ngFor="let member of teamForm.get('members').controls; index as i">
+      <div class="members" *ngFor="let member of members; index as i">
         <mdc-text-field [formControl]="member.controls.email" label="Email" outlined minlength="3" (change)="onChange()"></mdc-text-field>
         <mdc-text-field [formControl]="member.controls.name" label="Név (osztály)" outlined minlength="3" (change)="onChange()"></mdc-text-field>
       </div>

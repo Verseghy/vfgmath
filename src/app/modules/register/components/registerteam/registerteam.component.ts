@@ -11,6 +11,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class RegisterteamComponent implements OnInit {
 
   teamForm: FormGroup;
+  members = [];
 
   constructor(
     private fb: FormBuilder,
@@ -34,6 +35,7 @@ export class RegisterteamComponent implements OnInit {
         })
       ])
     });
+    this.members = (<FormArray>this.teamForm.get('members')).controls;
   }
 
   onChange() {
