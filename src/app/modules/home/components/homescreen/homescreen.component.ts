@@ -2,7 +2,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 import { Router } from '@angular/router';
-import { format } from 'date-fns/esm';
+import { formatDistanceStrict } from 'date-fns/esm';
 
 @Component({
   selector: 'app-homescreen',
@@ -29,8 +29,10 @@ export class HomescreenComponent implements OnInit {
             this.route.navigate(['/login']);
           }
 
-          const date = new Date(x.data()['startdate'].toDate().getTime() - new Date().getTime());
-          this.time = format(date, 'dd') + ' nap ' + format(date, 'hh:mm:ss');
+          this.time = formatDistanceStrict(
+            x.data()['startdate'].toDate(),
+            new Date(),
+            {includeSeconds: true, roundingMethod: 'floor'});
         });
       } else {
         this.route.navigate(['/login']);
