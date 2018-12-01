@@ -46,7 +46,7 @@ export class RegisterteamComponent implements OnInit {
 
       if (
         indexnumber !==  (<FormArray>this.teamForm.controls.members).length - 1 &&
-        (member.controls.email.value === null || member.controls.name.value == null)
+        member.controls.email.value === null && member.controls.name.value == null
       ) {
         (<FormArray>this.teamForm.controls.members).removeAt(indexnumber);
         break;
@@ -56,20 +56,14 @@ export class RegisterteamComponent implements OnInit {
 
     // If the last fields are not empty append another one to the end
     if (
-      <FormGroup>(
-        <FormGroup>(
-          <FormArray>(
-            this.teamForm.controls.members
-          )
+        (<FormGroup>
+          (<FormArray>this.teamForm.controls.members
         ).controls[(<FormArray>this.teamForm.controls.members).length - 1]
-      ).controls.email.value !== null &&
-      <FormGroup>(
-        <FormGroup>(
-          <FormArray>(
-            this.teamForm.controls.members
-          )
+        ).controls.email.value !== null &&
+        (<FormGroup>
+          (<FormArray>this.teamForm.controls.members
         ).controls[(<FormArray>this.teamForm.controls.members).length - 1]
-      ).controls.name.value !== null
+        ).controls.name.value !== null
     ) {
       const formarray = <FormArray>(this.teamForm.controls.members);
       formarray.push(

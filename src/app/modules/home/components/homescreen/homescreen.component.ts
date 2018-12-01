@@ -32,7 +32,8 @@ export class HomescreenComponent implements OnInit {
           this.time = formatDistanceStrict(
             x.data()['startdate'].toDate(),
             new Date(),
-            {includeSeconds: true, roundingMethod: 'floor'});
+            {includeSeconds: true, roundingMethod: 'floor'}
+          );
         });
       } else {
         this.route.navigate(['/login']);
