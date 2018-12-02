@@ -17,7 +17,8 @@ export class HomescreenComponent implements OnInit {
   constructor(
     private afStore: AngularFirestore,
     private route: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.afStore.collection('info').doc('info').get().subscribe(x => {
@@ -35,6 +36,8 @@ export class HomescreenComponent implements OnInit {
             {includeSeconds: true, roundingMethod: 'floor'}
           );
         });
+      } else if (x.data()['enddate'].toDate().getTime() < new Date().getTime()) {
+        this.route.navigate(['/after']);
       } else {
         this.route.navigate(['/login']);
       }

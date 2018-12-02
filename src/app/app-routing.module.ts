@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: './modules/register/register.module#RegisterModule'
   },
   {
+    path: 'after',
+    loadChildren: './modules/after/after.module#AfterModule'
+  },
+  {
     path: '**',
     loadChildren: './modules/notfound/notfound.module#NotfoundModule'
   }
@@ -29,4 +33,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

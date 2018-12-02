@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -15,10 +15,10 @@ export class LoginscreenComponent implements OnInit {
 
   loginForm = new FormGroup({
     username: new FormControl(
-      { value: '', disabled: false }, [Validators.required]
+      {value: '', disabled: false}, [Validators.required]
     ),
     password: new FormControl(
-      { value: '', disabled: false}, [Validators.required]
+      {value: '', disabled: false}, [Validators.required]
     )
   });
 
@@ -26,16 +26,20 @@ export class LoginscreenComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
     private route: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.afStore.collection('info').doc('info').get().subscribe(x => {
       if (x.data()['startdate'].toDate().getTime() > new Date().getTime()) {
         this.route.navigate(['/home']);
+      } else if (x.data()['enddate'].toDate().getTime() < new Date().getTime()) {
+        this.route.navigate(['/after']);
       } else {
         this.hide = false;
       }
     });
+
     this.afAuth.authState.subscribe(x => {
       if (x) {
         console.log(x);
