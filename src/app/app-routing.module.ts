@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: './modules/after/after.module#AfterModule'
   },
   {
+    path: 'competition',
+    loadChildren: './modules/competition/competition.module#CompetitionModule'
+  },
+  {
     path: '**',
     loadChildren: './modules/notfound/notfound.module#NotfoundModule'
   }
