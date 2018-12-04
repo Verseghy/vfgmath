@@ -4,6 +4,7 @@ import { CompetitionscreenComponent } from './components/competitionscreen/compe
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RouterModule, Routes } from '@angular/router';
+import { ProblemComponent } from './components/problem/problem.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [CompetitionscreenComponent],
+  declarations: [CompetitionscreenComponent, ProblemComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
