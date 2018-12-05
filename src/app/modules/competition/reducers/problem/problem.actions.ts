@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Problem } from './competition.reducer';
+import { Problem } from './problem.reducer';
 
 export const QUERY = '[Problem] query competitions';
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import * as actions from '../../reducers/competition.actions';
-import * as fromProblem from '../../reducers/competition.reducer';
+import * as actions from '../../reducers/problem/problem.actions';
+import * as fromProblem from '../../reducers/problem/problem.reducer';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -42,10 +42,9 @@ export class CompetitionscreenComponent implements OnInit {
       }
     });
 
-    this.problems = this.store.select('problems').pipe(
+    this.problems = this.store.select('competition').pipe(
       map(x => {
-        console.log(x.entities);
-        return x;
+        return x.problem;
       })
     );
     this.store.dispatch(  new actions.Query() );

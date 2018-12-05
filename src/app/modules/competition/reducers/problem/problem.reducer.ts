@@ -1,4 +1,4 @@
-import * as actions from './competition.actions';
+import * as actions from './problem.actions';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { createFeatureSelector } from '@ngrx/store';
 
@@ -13,7 +13,7 @@ export interface State extends EntityState<Problem> {}
 
 export const initialState: State = problemsAdapter.getInitialState();
 
-export function competitionReducer(
+export function problemReducer(
   state: State = initialState,
   action: actions.ProblemActions) {
 
@@ -36,11 +36,11 @@ export function competitionReducer(
   }
 }
 
-export const getCompetitionState = createFeatureSelector<State>('problems');
+export const getProblemState = createFeatureSelector<State>('problems');
 
 export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
-} = problemsAdapter.getSelectors(getCompetitionState);
+} = problemsAdapter.getSelectors(getProblemState);

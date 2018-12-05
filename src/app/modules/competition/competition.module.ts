@@ -7,8 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProblemComponent } from './components/problem/problem.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { CompetitionEffects } from './reducers/competition.effects';
-import { competitionReducer } from './reducers/competition.reducer';
+import { ProblemEffects } from './reducers/problem/problem.effects';
+import { competitionReducers } from './reducers';
 
 const routes: Routes = [
   {
@@ -22,8 +22,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    StoreModule.forFeature('problems', competitionReducer),
-    EffectsModule.forFeature([CompetitionEffects]),
+    StoreModule.forFeature('competition', competitionReducers),
+    EffectsModule.forFeature([ProblemEffects]),
     AngularFireAuthModule,
     AngularFirestoreModule
   ]

@@ -4,13 +4,13 @@ import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import * as competitionActions from './competition.actions';
+import * as competitionActions from './problem.actions';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
-import { Problem } from './competition.reducer';
+import { Problem } from './problem.reducer';
 
 
 @Injectable()
-export class CompetitionEffects {
+export class ProblemEffects {
 
   @Effect()
   query$: Observable<Action> = this.actions$.ofType(competitionActions.QUERY).pipe(
