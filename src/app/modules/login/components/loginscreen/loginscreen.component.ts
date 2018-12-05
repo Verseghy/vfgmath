@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Store } from '@ngrx/store';
+import * as authActions from '../../../../reducers/auth/auth.actions';
 
 @Component({
   selector: 'app-loginscreen',
@@ -25,7 +27,8 @@ export class LoginscreenComponent implements OnInit {
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
-    private route: Router
+    private route: Router,
+    private store: Store<any>
   ) {
   }
 
@@ -39,20 +42,14 @@ export class LoginscreenComponent implements OnInit {
         this.hide = false;
       }
     });
-
-    this.afAuth.authState.subscribe(x => {
-      if (x) {
-        console.log(x);
-      }
-    });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.afAuth.auth.signInWithEmailAndPassword(
-        this.loginForm.controls['username'].value,
-        this.loginForm.controls['password'].value
-      );
+      this.store.dispatch(new authActions.Login({
+        email: this.loginForm.controls['username'].value,
+        password: this.loginForm.controls['password'].value,
+      }));
       this.loginForm.reset();
     }
   }
