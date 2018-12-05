@@ -12,6 +12,11 @@ import { Problem } from './problem.reducer';
 @Injectable()
 export class ProblemEffects {
 
+  constructor(
+    private actions$: Actions,
+    private afs: AngularFirestore
+  ) {}
+
   @Effect()
   query$: Observable<Action> = this.actions$.ofType(competitionActions.QUERY).pipe(
     switchMap(() => {
@@ -28,6 +33,4 @@ export class ProblemEffects {
       };
     })
   );
-
-  constructor(private actions$: Actions, private afs: AngularFirestore) { }
 }

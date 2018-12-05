@@ -13,6 +13,11 @@ export type Action = authActions.AuthActions;
 @Injectable()
 export class AuthEffects {
 
+  constructor(
+    private actions$: Actions,
+    private afAuth: AngularFireAuth
+  ) {}
+
   @Effect()
   getUser: Observable<Action> = this.actions$.ofType(authActions.GET_USER).pipe(
     map((action: authActions.GetUser) => action.payload ),
@@ -29,6 +34,7 @@ export class AuthEffects {
     }),
     catchError(() =>  of(new authActions.AuthError()) )
   );
+
   @Effect()
   login: Observable<Action> = this.actions$.ofType(authActions.LOGIN).pipe(
     map((action: authActions.Login) => action.payload),
@@ -42,6 +48,4 @@ export class AuthEffects {
       return of(new authActions.AuthError({error: err.message}));
     })
   );
-
-  constructor(private actions$: Actions, private afAuth: AngularFireAuth) {}
 }

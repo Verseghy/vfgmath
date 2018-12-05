@@ -28,8 +28,8 @@ export class Removed implements Action {
   constructor (public payload: Problem) {}
 }
 
-export type ProblemActions =
-  Query |
-  Added |
-  Modified |
-  Removed;
+export type ProblemActions
+  = Query
+  | Added
+  | Modified
+  | Removed;
