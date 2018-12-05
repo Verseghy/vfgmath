@@ -1,3 +1,7 @@
 <div *ngIf="!hide" class="container">
-  Competitioncomponent
+  <div *ngFor="let problem of (problems | async)?.entities | keyvalue">
+
+    <p>{{problem.value.text}}</p>
+
+  </div>
 </div>

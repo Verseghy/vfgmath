@@ -10,6 +10,10 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AngularFireModule.initializeApp(environment.firebase),
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25
+    }),
+    EffectsModule.forRoot([]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

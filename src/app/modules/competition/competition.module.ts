@@ -5,6 +5,10 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RouterModule, Routes } from '@angular/router';
 import { ProblemComponent } from './components/problem/problem.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { CompetitionEffects } from './competition.effects';
+import { competitionReducer } from './competition.reducer';
 
 const routes: Routes = [
   {
@@ -18,6 +22,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    StoreModule.forFeature('competition', competitionReducer),
+    EffectsModule.forFeature([CompetitionEffects]),
     AngularFireAuthModule,
     AngularFirestoreModule
   ]

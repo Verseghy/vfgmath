@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
+import * as actions from '../../competition.actions';
+import * as fromProblem from '../../competition.reducer';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-competitionscreen',
@@ -11,11 +16,13 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class CompetitionscreenComponent implements OnInit {
 
   hide = true;
+  problems: Observable<any>;
 
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private store: Store<fromProblem.State>
   ) { }
 
   ngOnInit() {
@@ -32,12 +39,16 @@ export class CompetitionscreenComponent implements OnInit {
     this.afAuth.authState.subscribe(x => {
       if (!x) {
         this.router.navigate(['/login']);
-      } else {
-        console.log(x);
       }
     });
 
-
+    this.problems = this.store.select('competition').pipe(
+      map(x => {
+        console.log(x.entities);
+        return x;
+      })
+    );
+    this.store.dispatch(  new actions.Query() );
   }
 
 }
