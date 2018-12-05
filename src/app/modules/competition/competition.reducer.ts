@@ -8,32 +8,27 @@ export interface Problem {
   image: string;
 }
 
-export interface Solution {
-  id: number;
-  solution: string;
-}
-
-export const competitionAdapter = createEntityAdapter<Problem>();
+export const problemsAdapter = createEntityAdapter<Problem>();
 export interface State extends EntityState<Problem> {}
 
-export const initialState: State = competitionAdapter.getInitialState();
+export const initialState: State = problemsAdapter.getInitialState();
 
 export function competitionReducer(
   state: State = initialState,
-  action: actions.CompetitionActions) {
+  action: actions.ProblemActions) {
 
   switch (action.type) {
     case actions.ADDED:
-      return competitionAdapter.addOne(action.payload, state);
+      return problemsAdapter.addOne(action.payload, state);
 
     case actions.MODIFIED:
-      return competitionAdapter.updateOne({
+      return problemsAdapter.updateOne({
         id: action.payload.id,
         changes: action.payload
       }, state);
 
     case actions.REMOVED:
-      return competitionAdapter.removeOne(action.payload.id, state);
+      return problemsAdapter.removeOne(action.payload.id, state);
 
     default:
       return state;
@@ -41,11 +36,11 @@ export function competitionReducer(
   }
 }
 
-export const getCompetitionState = createFeatureSelector<State>('competition');
+export const getCompetitionState = createFeatureSelector<State>('problems');
 
 export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
-} = competitionAdapter.getSelectors(getCompetitionState);
+} = problemsAdapter.getSelectors(getCompetitionState);

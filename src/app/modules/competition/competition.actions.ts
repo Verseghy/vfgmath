@@ -1,13 +1,11 @@
 import { Action } from '@ngrx/store';
-import { Problem, Solution } from './competition.reducer';
+import { Problem } from './competition.reducer';
 
-export const QUERY = '[Competition] query competitions';
+export const QUERY = '[Problem] query competitions';
 
-export const ADDED    = '[Competition] added';
-export const MODIFIED = '[Competition] modified';
-export const REMOVED  = '[Competition] removed';
-export const UPDATE   = '[Competition] update';
-export const SUCCESS  = '[Competition] update success';
+export const ADDED    = '[Problem] added';
+export const MODIFIED = '[Problem] modified';
+export const REMOVED  = '[Problem] removed';
 
 
 export class Query implements Action {
@@ -30,23 +28,8 @@ export class Removed implements Action {
   constructor (public payload: Problem) {}
 }
 
-export class Update implements Action {
-  readonly type = UPDATE;
-  constructor(
-    public id: string,
-    public changes: Partial<Solution>,
-  ) { }
-}
-
-export class Success implements Action {
-  readonly type = SUCCESS;
-  constructor() {}
-}
-
-export type CompetitionActions =
+export type ProblemActions =
   Query |
   Added |
   Modified |
-  Removed |
-  Update |
-  Success;
+  Removed;

@@ -42,7 +42,7 @@ export class CompetitionscreenComponent implements OnInit {
       }
     });
 
-    this.problems = this.store.select('competition').pipe(
+    this.problems = this.store.select('problems').pipe(
       map(x => {
         console.log(x.entities);
         return x;

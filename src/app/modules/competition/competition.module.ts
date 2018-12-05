@@ -22,7 +22,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    StoreModule.forFeature('competition', competitionReducer),
+    StoreModule.forFeature('problems', competitionReducer),
     EffectsModule.forFeature([CompetitionEffects]),
     AngularFireAuthModule,
     AngularFirestoreModule
