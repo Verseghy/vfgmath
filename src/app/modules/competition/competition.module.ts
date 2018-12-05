@@ -7,8 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProblemComponent } from './components/problem/problem.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { CompetitionEffects } from './competition.effects';
-import { competitionReducer } from './competition.reducer';
+import { CompetitionEffects } from './reducers/competition.effects';
+import { competitionReducer } from './reducers/competition.reducer';
 
 const routes: Routes = [
   {
