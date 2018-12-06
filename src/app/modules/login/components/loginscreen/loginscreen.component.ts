@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import * as authActions from '../../../../reducers/auth/auth.actions';
+import * as timeActions from '../../../../reducers/time/time.actions';
 
 @Component({
   selector: 'app-loginscreen',
@@ -13,7 +14,7 @@ import * as authActions from '../../../../reducers/auth/auth.actions';
 })
 export class LoginscreenComponent implements OnInit {
 
-  hide = true;
+  hide = false;
 
   loginForm = new FormGroup({
     username: new FormControl(
@@ -33,15 +34,7 @@ export class LoginscreenComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.afStore.collection('info').doc('info').get().subscribe(x => {
-      if (x.data()['startdate'].toDate().getTime() > new Date().getTime()) {
-        this.route.navigate(['/home']);
-      } else if (x.data()['enddate'].toDate().getTime() < new Date().getTime()) {
-        this.route.navigate(['/after']);
-      } else {
-        this.hide = false;
-      }
-    });
+    this.store.dispatch(new timeActions.Query());
   }
 
   onSubmit() {

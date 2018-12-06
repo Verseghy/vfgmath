@@ -1,4 +1,4 @@
-import * as userActions from './auth.actions';
+import * as authActions from './auth.actions';
 
 export interface User {
   uid: string;
@@ -6,27 +6,27 @@ export interface User {
   error?: string;
 }
 
-export type Action = userActions.AuthActions;
+export type Action = authActions.AuthActions;
 
 export function authReducer(state: User, action: Action) {
   switch (action.type) {
 
-    case userActions.GET_USER:
+    case authActions.GET_USER:
       return { ...state, loading: true };
 
-    case userActions.AUTHENTICATED:
+    case authActions.AUTHENTICATED:
       return { ...state, ...action.payload, loading: false };
 
-    case userActions.NOT_AUTHENTICATED:
+    case authActions.NOT_AUTHENTICATED:
       return { ...state, loading: false };
 
-    case userActions.LOGIN:
+    case authActions.LOGIN:
       return { ...state, loading: true };
 
-    case userActions.AUTH_ERROR:
+    case authActions.AUTH_ERROR:
       return { ...state, ...action.payload, loading: false };
 
-    case userActions.LOGOUT:
+    case authActions.LOGOUT:
       return { ...state, loading: true };
 
   }

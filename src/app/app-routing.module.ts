@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'competition',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {

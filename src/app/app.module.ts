@@ -16,6 +16,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './reducers';
 import { AuthEffects } from './reducers/auth/auth.effects';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { TimeEffects } from './reducers/time/time.effects';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -26,13 +28,17 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFirestoreModule,
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      TimeEffects
+    ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
