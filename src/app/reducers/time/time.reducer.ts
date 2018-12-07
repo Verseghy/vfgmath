@@ -5,7 +5,7 @@ export interface Time {
   loading: boolean;
 }
 
-enum TimeState {
+export enum TimeState {
   BEFORE,
   DURING,
   AFTER

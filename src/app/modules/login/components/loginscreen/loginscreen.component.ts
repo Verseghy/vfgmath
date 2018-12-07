@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import * as authActions from '../../../../reducers/auth/auth.actions';
-import * as timeActions from '../../../../reducers/time/time.actions';
 
 @Component({
   selector: 'app-loginscreen',
@@ -34,8 +33,8 @@ export class LoginscreenComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new timeActions.Query());
   }
+
 
   onSubmit() {
     if (this.loginForm.valid) {
