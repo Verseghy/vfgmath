@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import * as actions from '../../reducers/problem/problem.actions';
-import * as fromProblem from '../../reducers/problem/problem.reducer';
+import * as problemActions from '../../reducers/problem/problem.actions';
+import * as authActions from '../../../../reducers/auth/auth.actions';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,39 +15,27 @@ import { map } from 'rxjs/operators';
 })
 export class CompetitionscreenComponent implements OnInit {
 
-  hide = true;
   problems: Observable<any>;
 
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
     private router: Router,
-    private store: Store<fromProblem.State>
+    private store: Store<any>
   ) { }
 
   ngOnInit() {
-    this.afStore.collection('info').doc('info').get().subscribe(x => {
-      if (x.data()['startdate'].toDate().getTime() > new Date().getTime()) {
-        this.router.navigate(['/home']);
-      } else if (x.data()['enddate'].toDate().getTime() < new Date().getTime()) {
-        this.router.navigate(['/after']);
-      } else {
-        this.hide = false;
-      }
-    });
-
-    this.afAuth.authState.subscribe(x => {
-      if (!x) {
-        this.router.navigate(['/login']);
-      }
-    });
-
     this.problems = this.store.select('competition').pipe(
       map(x => {
         return x.problem;
       })
     );
-    this.store.dispatch(  new actions.Query() );
+    this.store.dispatch(new problemActions.Query());
+  }
+
+  logoutHandler () {
+    this.store.dispatch(new authActions.Logout());
+    this.router.navigate(['/login']);
   }
 
 }

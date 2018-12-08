@@ -48,4 +48,17 @@ export class AuthEffects {
       return of(new authActions.AuthError({error: err.message}));
     })
   );
+D;
+  @Effect()
+  logout: Observable<Action> = this.actions$.ofType(authActions.LOGOUT).pipe(
+    switchMap(() => {
+      return fromPromise(this.afAuth.auth.signOut());
+    }),
+    map(() => {
+      return new authActions.GetUser();
+    }),
+    catchError(err => {
+      return of(new authActions.AuthError({error: err.message}));
+    })
+  );
 }

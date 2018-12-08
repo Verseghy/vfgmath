@@ -3,8 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as authActions from '../../../../reducers/auth/auth.actions';
+import { filter, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-loginscreen',
@@ -13,7 +15,7 @@ import * as authActions from '../../../../reducers/auth/auth.actions';
 })
 export class LoginscreenComponent implements OnInit {
 
-  hide = false;
+  error: Observable<string>;
 
   loginForm = new FormGroup({
     username: new FormControl(
@@ -33,6 +35,13 @@ export class LoginscreenComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.error = this.store.pipe(
+      select('auth'),
+      filter(data => !data.loading && data.error),
+      map(data => {
+        return data.error;
+      })
+    );
   }
 
 

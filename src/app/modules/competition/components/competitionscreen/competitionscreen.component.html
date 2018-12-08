@@ -1,7 +1,6 @@
-<div *ngIf="!hide" class="container">
-  <div *ngFor="let problem of (problems | async)?.entities | keyvalue">
+<button (click)="logoutHandler()" mdc-button outlined primary raised>Logout</button>
+<div *ngFor="let problem of (problems | async)?.entities | keyvalue">
 
-    <p>{{problem.value.text}}</p>
+  <p>{{problem.value.text}}</p>
 
-  </div>
 </div>
