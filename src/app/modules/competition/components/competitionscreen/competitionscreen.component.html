@@ -1,6 +1,4 @@
 <button (click)="logoutHandler()" mdc-button outlined primary raised>Logout</button>
 <div *ngFor="let problem of (problems | async)?.entities | keyvalue">
-
-  <p>{{problem.value.text}}</p>
-
+  <app-problem [problem]="problem.value"></app-problem>
 </div>
