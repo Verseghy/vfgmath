@@ -14,8 +14,8 @@
           <span *ngIf="loginForm.controls['password'].hasError('required')">Jelszó kötelező</span>
           <span *ngIf="loginForm.controls['password'].hasError('minlength')">Jelszó nem elég hosszú</span>
         </mdc-text-field-helper-text>
-
-        <button mdc-button primary outlined type="submit" [disabled]="!loginForm.valid">Bejelentkezés</button>
+        <button [disabled]="!loginForm.valid" class="button" mdc-button outlined primary type="submit">Bejelentkezés
+        </button>
       </mdc-form-field>
     </form>
 
