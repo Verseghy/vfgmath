@@ -1,3 +1,30 @@
+.loginbox {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 7fr 1fr 2fr 3fr 1fr 7fr;
+  grid-gap: 5px;
+  grid-template-areas: ". . ." ". logo ." ". login ." ". form ." ". button ." ". . . ";
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+  background-color: #388e3c;
+}
+
 .image {
-    height: 30px;
+  height: 100px;
+  grid-area: logo;
+}
+
+.logintext {
+  font-size: 32px;
+  grid-area: login;
+}
+
+.form { //TODO legyen form is grid
+
+  grid-area: form;
+}
+
+.button {
+  grid-area: button;
 }
