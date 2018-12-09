@@ -1,13 +1,12 @@
 .loginbox {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 7fr 1fr 2fr 3fr 1fr 7fr;
+  grid-template-rows: 7fr 1fr 2fr 4fr 7fr;
   grid-gap: 5px;
-  grid-template-areas: ". . ." ". logo ." ". login ." ". form ." ". button ." ". . . ";
+  grid-template-areas: ". . ." ". logo ." ". login ." ". form ." ". . . ";
   justify-items: center;
   align-items: center;
   height: 100%;
-  background-color: #388e3c;
 }
 
 .image {
@@ -20,11 +19,23 @@
   grid-area: login;
 }
 
-.form { //TODO legyen form is grid
-
+.form {
+  display: grid;
   grid-area: form;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "username ." "passwd ." "button";
 }
-
 .button {
   grid-area: button;
+}
+
+.username {
+  grid-area: username;
+}
+
+.passwd {
+  grid-area: passwd;
 }
