@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Problem } from '../../reducers/problem/problem.reducer';
 
 @Component({
   selector: 'app-problem',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./problem.component.scss']
 })
 export class ProblemComponent implements OnInit {
+
+  @Input() problem: Problem;
 
   constructor() { }
 
