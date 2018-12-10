@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as problemActions from '../../reducers/problem/problem.actions';
 import * as authActions from '../../../../reducers/auth/auth.actions';
-import { Store } from '@ngrx/store';
+import * as solutionActions from '../../reducers/solution/solution.actions';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -16,6 +17,7 @@ import { map } from 'rxjs/operators';
 export class CompetitionscreenComponent implements OnInit {
 
   problems: Observable<any>;
+  solutions: Observable<any>;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -31,6 +33,14 @@ export class CompetitionscreenComponent implements OnInit {
       })
     );
     this.store.dispatch(new problemActions.Query());
+
+    this.solutions = this.store.pipe(
+      select('competition'),
+      map(x => {
+        return x.solution;
+      })
+    );
+    this.store.dispatch(new solutionActions.Query());
   }
 
   logoutHandler () {
