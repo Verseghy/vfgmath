@@ -6,8 +6,11 @@ import * as problemActions from '../../reducers/problem/problem.actions';
 import * as authActions from '../../../../reducers/auth/auth.actions';
 import * as solutionActions from '../../reducers/solution/solution.actions';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { fromEvent, Observable } from 'rxjs';
+import { debounceTime, distinct, map, tap } from 'rxjs/operators';
+import { KeyValue } from '@angular/common';
+
+declare var renderMathInElement: any;
 
 @Component({
   selector: 'app-competitionscreen',
@@ -23,7 +26,7 @@ export class CompetitionscreenComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
     private router: Router,
-    private store: Store<any>
+    private store: Store<any>,
   ) { }
 
   ngOnInit() {
@@ -33,6 +36,31 @@ export class CompetitionscreenComponent implements OnInit {
       })
     );
     this.store.dispatch(new problemActions.Query());
+    this.problems.subscribe(x => {
+      if (x.ids.length >= 40) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ]
+        });
+      }
+    });
+
+    fromEvent(document, 'scroll').pipe(
+      debounceTime(200),
+      distinct(),
+      tap(() => {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ]
+        });
+      })
+    ).subscribe();
 
     this.solutions = this.store.pipe(
       select('competition'),
@@ -46,6 +74,13 @@ export class CompetitionscreenComponent implements OnInit {
   logoutHandler () {
     this.store.dispatch(new authActions.Logout());
     this.router.navigate(['/login']);
+  }
+
+  comparator(a: KeyValue<any, any>, b: KeyValue<any, any>) {
+    if (a.value.id === b.value.id) {
+      return 0;
+    }
+    return a.value.id < b.value.id ? -1 : 1;
   }
 
 }

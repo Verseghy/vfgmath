@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProblemEffects } from './reducers/problem/problem.effects';
 import { competitionReducers } from './reducers';
 import { MdcButtonModule, MdcTextFieldModule } from '@angular-mdc/web';
+import { SolutionEffects } from './reducers/solution/solution.effects';
 
 const routes: Routes = [
   {
@@ -24,7 +25,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('competition', competitionReducers),
-    EffectsModule.forFeature([ProblemEffects]),
+    EffectsModule.forFeature([ProblemEffects, SolutionEffects]),
     AngularFireAuthModule,
     AngularFirestoreModule,
     MdcButtonModule,

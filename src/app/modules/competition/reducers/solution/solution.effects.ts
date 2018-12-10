@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Action, select, Store } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import * as solutionActions from './solution.actions';
 import * as authActions from '../../../../reducers/auth/auth.actions';
-import { map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { Solution } from './solution.reducer';
-
+import { filter, map, mergeMap, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class SolutionEffects {
@@ -16,25 +14,22 @@ export class SolutionEffects {
   @Effect()
   query$: Observable<Action> = this.actions$.ofType(solutionActions.QUERY).pipe(
     switchMap(() => {
-      console.log('getuser');
       this.store.dispatch(new authActions.GetUser());
       return this.store.pipe(
         select('auth'),
+        filter(data => data),
+        filter(data => !data.loading),
         map(data => {
-          return data;
+          return of(data);
         })
       );
     }),
     switchMap(data => data),
-    tap(data => {
-      console.log('auth', data);
-    }),
-    switchMap(() => {
-      return this.afs.collection<Solution>('problems').doc('svOhCuqixUKR6f9sNJ7c').collection('solutions').stateChanges();
+    switchMap((user) => {
+      return this.afs.collection('teams').doc(user.uid).collection('solutions').stateChanges();
     }),
     mergeMap(actions => actions),
     map(action => {
-      console.log('action', action);
       return {
         type: `[Solution] ${action.type}`,
         payload: {
