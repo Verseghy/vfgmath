@@ -44,7 +44,7 @@ def main():
     db = utils.make_connection(args.key)
 
     collection = utils.get_collection(db, args.collection, args.fresh)
-    
+
     read_to_db(args.source, collection)
 
 
