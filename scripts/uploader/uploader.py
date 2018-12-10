@@ -35,7 +35,7 @@ def main():
     parser.add_argument('source', help='source CSV file')
     parser.add_argument('--key', help='Account key JSON file. Defaults to "{}"'.format(DEFAULTS["key"]), default=DEFAULTS["key"])
     parser.add_argument('--collection', help='Collection to upload to. Defaults to "{}"'.format(DEFAULTS["collection"]), default=DEFAULTS["collection"])
-    parser.add_argument('--nofresh', help='Do not emove old entries from target collection', action="store_false", dest="fresh")
+    parser.add_argument('--nofresh', help='Do not remove old entries from target collection', action="store_false", dest="fresh")
     parser.add_argument('-v','--verbose', help='Enable additional logging', action="store_true", dest="verbose")
 
     args = parser.parse_args()
