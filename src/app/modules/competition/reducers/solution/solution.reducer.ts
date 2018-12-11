@@ -4,7 +4,7 @@ import { createFeatureSelector } from '@ngrx/store';
 
 export interface Solution {
   id: string;
-  text: string;
+  solution: number;
 }
 
 export const solutionsAdapter = createEntityAdapter<Solution>();

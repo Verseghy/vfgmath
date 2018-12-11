@@ -40,6 +40,27 @@ export class SolutionEffects {
     })
   );
 
+  @Effect()
+  update$: Observable<Action> = this.actions$.ofType(solutionActions.UPDATE).pipe(
+    switchMap((action: solutionActions.Update) => {
+      this.store.dispatch(new authActions.GetUser());
+      return this.store.pipe(
+        select('auth'),
+        filter(data => data),
+        filter(data => !data.loading),
+        map(data => {
+          return of({data: data, action: action});
+        })
+      );
+    }),
+    switchMap(data => data),
+    map(data => {
+      const id = data.action.id.toString();
+      return this.afs.collection('teams').doc(data.data.uid).collection('solutions').doc(id).set(data.action.changes);
+    }),
+    map(() => new solutionActions.Success())
+  );
+
   constructor(
     private actions$: Actions,
     private afs: AngularFirestore,

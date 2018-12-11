@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Problem } from '../../reducers/problem/problem.reducer';
 import { select, Store } from '@ngrx/store';
 import { filter, map, tap } from 'rxjs/operators';
+import * as solutionActions from '../../reducers/solution/solution.actions';
 
 @Component({
   selector: 'app-problem',
@@ -32,6 +33,16 @@ export class ProblemComponent implements OnInit {
         this.solution.value = data.solution;
       })
     ).subscribe();
+  }
+
+  submit () {
+    this.store.dispatch(new solutionActions.Update(
+      this.problem.id,
+      {
+        id: this.problem.id,
+        solution: Number(this.solution.value)
+      }
+    ));
   }
 
 }
