@@ -31,14 +31,64 @@
 @media (min-width: 576px) and (max-width: 767px) {
 
   .loginbox {
-    grid-template-columns: minmax (576px, 767px);
-    grid-template-rows: 100px 100px 200px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 150px 100px 200px;
     grid-template-areas: "logo" "login" "form";
   }
 
   .loginInput {
-    grid-template-columns: minmax(576px, 767px);
+    grid-template-columns: 500px;
+  }
+
+  .logintext {
+    font-size: 48px;
+  }
+
+  .image {
+    height: 150px;
   }
 }
 
+@media (min-width: 768px) and (max-width: 991px) {
 
+  .loginbox {
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 150px 200px;
+    grid-template-areas: "logo" "login" "form";
+  }
+
+  .loginInput {
+    grid-template-columns: 600px;
+  }
+
+  .logintext {
+    font-size: 64px;
+  }
+
+  .image {
+    height: 200px;
+  }
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .loginbox {
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 150px 250px;
+    grid-template-areas: "logo" "login" "form";
+  }
+
+  .loginInput {
+    grid-template-columns: 650px;
+  }
+
+  .logintext {
+    font-size: 64px;
+  }
+
+  .image {
+    height: 200px;
+  }
+
+}
