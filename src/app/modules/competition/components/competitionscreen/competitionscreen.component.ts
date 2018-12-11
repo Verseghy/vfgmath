@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as problemActions from '../../reducers/problem/problem.actions';
 import * as authActions from '../../../../reducers/auth/auth.actions';
 import * as solutionActions from '../../reducers/solution/solution.actions';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, distinct, map, tap } from 'rxjs/operators';
 import { KeyValue } from '@angular/common';
@@ -62,12 +62,6 @@ export class CompetitionscreenComponent implements OnInit {
       })
     ).subscribe();
 
-    this.solutions = this.store.pipe(
-      select('competition'),
-      map(x => {
-        return x.solution;
-      })
-    );
     this.store.dispatch(new solutionActions.Query());
   }
 

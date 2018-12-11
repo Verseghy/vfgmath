@@ -50,8 +50,8 @@ export class LoginscreenComponent implements OnInit, OnDestroy {
       filter(data => data),
       filter(data => !data.loading),
       filter(data => data.uid),
-      tap((data) => {
-        console.log(data);
+      tap(() => {
+        // @ts-ignore
         window.location = '/competition'; // TODO: Pls fix this
       })
     ).subscribe());
