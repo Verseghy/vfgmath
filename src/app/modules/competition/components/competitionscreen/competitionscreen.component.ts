@@ -4,9 +4,13 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as problemActions from '../../reducers/problem/problem.actions';
 import * as authActions from '../../../../reducers/auth/auth.actions';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import * as solutionActions from '../../reducers/solution/solution.actions';
+import { select, Store } from '@ngrx/store';
+import { fromEvent, Observable } from 'rxjs';
+import { debounceTime, distinct, map, tap } from 'rxjs/operators';
+import { KeyValue } from '@angular/common';
+
+declare var renderMathInElement: any;
 
 @Component({
   selector: 'app-competitionscreen',
@@ -16,12 +20,13 @@ import { map } from 'rxjs/operators';
 export class CompetitionscreenComponent implements OnInit {
 
   problems: Observable<any>;
+  solutions: Observable<any>;
 
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
     private router: Router,
-    private store: Store<any>
+    private store: Store<any>,
   ) { }
 
   ngOnInit() {
@@ -31,11 +36,51 @@ export class CompetitionscreenComponent implements OnInit {
       })
     );
     this.store.dispatch(new problemActions.Query());
+    this.problems.subscribe(x => {
+      if (x.ids.length >= 40) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ]
+        });
+      }
+    });
+
+    fromEvent(document, 'scroll').pipe(
+      debounceTime(200),
+      distinct(),
+      tap(() => {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ]
+        });
+      })
+    ).subscribe();
+
+    this.solutions = this.store.pipe(
+      select('competition'),
+      map(x => {
+        return x.solution;
+      })
+    );
+    this.store.dispatch(new solutionActions.Query());
   }
 
   logoutHandler () {
     this.store.dispatch(new authActions.Logout());
     this.router.navigate(['/login']);
+  }
+
+  comparator(a: KeyValue<any, any>, b: KeyValue<any, any>) {
+    if (a.value.id === b.value.id) {
+      return 0;
+    }
+    return a.value.id < b.value.id ? -1 : 1;
   }
 
 }

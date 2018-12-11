@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { select, Store } from '@ngrx/store';
 import * as authActions from '../../../../reducers/auth/auth.actions';
-import { filter, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-loginscreen',
   templateUrl: './loginscreen.component.html',
   styleUrls: ['./loginscreen.component.scss']
 })
-export class LoginscreenComponent implements OnInit {
+export class LoginscreenComponent implements OnInit, OnDestroy {
 
   error: Observable<string>;
 
@@ -26,10 +26,12 @@ export class LoginscreenComponent implements OnInit {
     )
   });
 
+  subs: Array<Subscription> = [];
+
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
-    private route: Router,
+    private router: Router,
     private store: Store<any>
   ) {
   }
@@ -42,8 +44,24 @@ export class LoginscreenComponent implements OnInit {
         return data.error;
       })
     );
+
+    this.subs.push(this.store.pipe(
+      select('auth'),
+      filter(data => data),
+      filter(data => !data.loading),
+      filter(data => data.uid),
+      tap((data) => {
+        console.log(data);
+        window.location = '/competition'; // TODO: Pls fix this
+      })
+    ).subscribe());
   }
 
+  ngOnDestroy () {
+    for (const sub of this.subs) {
+      sub.unsubscribe();
+    }
+  }
 
   onSubmit() {
     if (this.loginForm.valid) {
