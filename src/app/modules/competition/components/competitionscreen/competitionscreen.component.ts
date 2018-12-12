@@ -10,7 +10,7 @@ import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, distinct, map, tap } from 'rxjs/operators';
 import { KeyValue } from '@angular/common';
 
-declare var renderMathInElement: any;
+declare var MathJax: any;
 
 @Component({
   selector: 'app-competitionscreen',
@@ -38,13 +38,7 @@ export class CompetitionscreenComponent implements OnInit {
     this.store.dispatch(new problemActions.Query());
     this.problems.subscribe(x => {
       if (x.ids.length >= 40) {
-        renderMathInElement(document.body, {
-          delimiters: [
-            {left: '$', right: '$', display: false},
-            {left: '\\(', right: '\\)', display: false},
-            {left: '\\[', right: '\\]', display: true}
-          ]
-        });
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
       }
     });
 
@@ -52,13 +46,7 @@ export class CompetitionscreenComponent implements OnInit {
       debounceTime(200),
       distinct(),
       tap(() => {
-        renderMathInElement(document.body, {
-          delimiters: [
-            {left: '$', right: '$', display: false},
-            {left: '\\(', right: '\\)', display: false},
-            {left: '\\[', right: '\\]', display: true}
-          ]
-        });
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
       })
     ).subscribe();
 
