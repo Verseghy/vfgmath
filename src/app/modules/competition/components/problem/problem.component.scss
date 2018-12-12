@@ -15,6 +15,10 @@ mdc-text-field {
   margin-top: 20px;
 }
 
+mdc-text-field::before, mdc-text-field::after {
+  display: none;
+}
+
 @media screen and (max-width: 600px) {
   :host {
     padding: 10px 12px;
