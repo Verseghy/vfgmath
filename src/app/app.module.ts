@@ -39,7 +39,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
       AuthEffects,
       TimeEffects
     ]),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('safety-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
