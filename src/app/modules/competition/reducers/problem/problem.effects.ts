@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import * as competitionActions from './problem.actions';
@@ -18,7 +18,8 @@ export class ProblemEffects {
   ) {}
 
   @Effect()
-  query$: Observable<Action> = this.actions$.ofType(competitionActions.QUERY).pipe(
+  query$: Observable<Action> = this.actions$.pipe(
+    ofType(competitionActions.QUERY),
     switchMap(() => {
       return this.afs.collection<Problem>('problems').stateChanges();
     }),

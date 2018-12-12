@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import * as authActions from './auth.actions';
@@ -19,7 +19,8 @@ export class AuthEffects {
   ) {}
 
   @Effect()
-  getUser: Observable<Action> = this.actions$.ofType(authActions.GET_USER).pipe(
+  getUser: Observable<Action> = this.actions$.pipe(
+    ofType(authActions.GET_USER),
     map((action: authActions.GetUser) => action.payload ),
     switchMap(() => this.afAuth.authState ),
     map(authData => {
@@ -36,7 +37,8 @@ export class AuthEffects {
   );
 
   @Effect()
-  login: Observable<Action> = this.actions$.ofType(authActions.LOGIN).pipe(
+  login: Observable<Action> = this.actions$.pipe(
+    ofType(authActions.LOGIN),
     map((action: authActions.Login) => action.payload),
     switchMap(payload => {
       return fromPromise(this.afAuth.auth.signInWithEmailAndPassword(payload.email, payload.password));
@@ -50,7 +52,8 @@ export class AuthEffects {
   );
 D;
   @Effect()
-  logout: Observable<Action> = this.actions$.ofType(authActions.LOGOUT).pipe(
+  logout: Observable<Action> = this.actions$.pipe(
+    ofType(authActions.LOGOUT),
     switchMap(() => {
       return fromPromise(this.afAuth.auth.signOut());
     }),

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { interval, Observable, of } from 'rxjs';
 import * as timeActions from './time.actions';
@@ -10,7 +10,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class TimeEffects {
 
   @Effect()
-  getTime: Observable<Action> = this.actions$.ofType(timeActions.QUERY).pipe(
+  getTime: Observable<Action> = this.actions$.pipe(
+    ofType(timeActions.QUERY),
     switchMap(() => {
       return this.afs.doc('info/info').get();
     }),

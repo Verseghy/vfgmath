@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Action, select, Store } from '@ngrx/store';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import * as solutionActions from './solution.actions';
@@ -12,7 +12,8 @@ import { filter, map, mergeMap, switchMap } from 'rxjs/operators';
 export class SolutionEffects {
 
   @Effect()
-  query$: Observable<Action> = this.actions$.ofType(solutionActions.QUERY).pipe(
+  query$: Observable<Action> = this.actions$.pipe(
+    ofType(solutionActions.QUERY),
     switchMap(() => {
       this.store.dispatch(new authActions.GetUser());
       return this.store.pipe(
@@ -41,7 +42,8 @@ export class SolutionEffects {
   );
 
   @Effect()
-  update$: Observable<Action> = this.actions$.ofType(solutionActions.UPDATE).pipe(
+  update$: Observable<Action> = this.actions$.pipe(
+    ofType(solutionActions.UPDATE),
     switchMap((action: solutionActions.Update) => {
       this.store.dispatch(new authActions.GetUser());
       return this.store.pipe(
