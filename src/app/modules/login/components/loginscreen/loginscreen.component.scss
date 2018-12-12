@@ -1,26 +1,36 @@
 .loginbox {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 7fr 1fr 2fr 4fr 7fr;
-  grid-template-areas: ". . ." ". logo ." ". login ." ". form ." ". . . ";
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 1fr auto 1fr;
+  grid-template-areas: ". . ." ". login ." ". . .";
   height: 100%;
   align-items: center;
 }
 
+.login {
+  grid-area: login;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  padding: 32px 24px 18px;
+  border-radius: 8px;
+  width: 275px;
+  box-sizing: border-box;
+}
+
 .image {
   height: 100px;
-  grid-area: logo;
-  margin: auto;
+  margin: 0 auto;
+  display: block;
 }
 
 .logintext {
-  font-size: 32px;
-  grid-area: login;
+  font-size: 24px;
   text-align: center;
+  display: block;
+  font-family: 'Roboto';
+  margin: 10px 0 15px 0;
 }
 
 .form {
-  grid-area: form;
   justify-self: center;
 }
 
@@ -28,69 +38,10 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-
 }
 
-@media (min-width: 576px) and (max-width: 767px) {
-
-  .loginbox {
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 20% 20% 20% 1fr;
-    grid-template-areas: ". . ." ". logo ." ". login ." ". form ." ". . .";
-  }
-
-  .logintext {
-    font-size: 48px;
-  }
-
-  .image {
-    height: 100%;
-  }
-
-  .form {
-    justify-self: stretch;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-
-  .loginbox {
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 20% 20% 30% 1fr;
-    grid-template-areas: ". . ." ". logo ." ". login ." ". form ." ". . .";
-  }
-
-  .logintext {
-    font-size: 48px;
-  }
-
-  .image {
-    height: 100%;
-  }
-
-  .form {
-    justify-self: stretch;
-  }
-
-}
-
-@media (min-width: 992px) and (max-width: 1199px) {
-
-  .loginbox {
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 20% 20% 30% 1fr;
-    grid-template-areas: ". . ." ". logo ." ". login ." ". form ." ". . .";
-  }
-
-  .logintext {
-    font-size: 64px;
-  }
-
-  .image {
-    height: 100%;
-  }
-
-  .form {
-    justify-self: stretch;
+@media screen and (max-width: 600px) {
+  .login {
+    box-shadow: none;
   }
 }
