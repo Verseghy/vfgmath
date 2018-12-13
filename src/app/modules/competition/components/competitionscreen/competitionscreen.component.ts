@@ -6,7 +6,7 @@ import * as problemActions from '../../reducers/problem/problem.actions';
 import * as authActions from '../../../../reducers/auth/auth.actions';
 import * as solutionActions from '../../reducers/solution/solution.actions';
 import { Store } from '@ngrx/store';
-import { fromEvent, Observable } from 'rxjs';
+import { fromEvent, interval, Observable } from 'rxjs';
 import { debounceTime, distinct, map, tap } from 'rxjs/operators';
 import { KeyValue } from '@angular/common';
 
@@ -21,6 +21,7 @@ export class CompetitionscreenComponent implements OnInit {
 
   problems: Observable<any>;
   solutions: Observable<any>;
+  timestring = '04:00:00';
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -51,6 +52,25 @@ export class CompetitionscreenComponent implements OnInit {
     ).subscribe();
 
     this.store.dispatch(new solutionActions.Query());
+
+    interval(1000).subscribe(() => {
+      const enddate = new Date('2018-12-13 23:43:00'); // TODO
+      const now = new Date();
+
+      const distance = enddate.getTime() - now.getTime();
+
+      if (distance < 0) {
+        this.router.navigate(['/after']);
+      }
+
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      this.timestring = hours.toString().padStart(2, '0') + ':' +
+                        minutes.toString().padStart(2, '0') + ':' +
+                        seconds.toString().padStart(2, '0');
+    });
   }
 
   logoutHandler () {
