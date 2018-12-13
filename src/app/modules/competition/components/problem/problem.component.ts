@@ -3,6 +3,7 @@ import { Problem } from '../../reducers/problem/problem.reducer';
 import { select, Store } from '@ngrx/store';
 import { filter, map, tap } from 'rxjs/operators';
 import * as solutionActions from '../../reducers/solution/solution.actions';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-problem',
@@ -13,9 +14,11 @@ export class ProblemComponent implements OnInit {
 
   @Input() problem: Problem;
   @ViewChild('solution') solution;
+  imagesrc;
 
   constructor(
-    private store: Store<any>
+    private store: Store<any>,
+    private afstore: AngularFireStorage
   ) { }
 
   ngOnInit() {
@@ -33,6 +36,10 @@ export class ProblemComponent implements OnInit {
         this.solution.value = data.solution;
       })
     ).subscribe();
+
+    if (this.problem.image) {
+      this.imagesrc = this.afstore.ref('images/' + this.problem.id + '.png').getDownloadURL();
+    }
   }
 
   submit () {

@@ -5,7 +5,7 @@ import { createFeatureSelector } from '@ngrx/store';
 export interface Problem {
   id: string;
   text: string;
-  image: string;
+  image: boolean;
 }
 
 export const problemsAdapter = createEntityAdapter<Problem>();

@@ -11,6 +11,7 @@ import { ProblemEffects } from './reducers/problem/problem.effects';
 import { competitionReducers } from './reducers';
 import { MdcButtonModule, MdcTextFieldModule } from '@angular-mdc/web';
 import { SolutionEffects } from './reducers/solution/solution.effects';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     EffectsModule.forFeature([ProblemEffects, SolutionEffects]),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     MdcButtonModule,
     MdcTextFieldModule
   ]
