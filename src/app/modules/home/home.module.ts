@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomescreenComponent } from './components/homescreen/homescreen.component';
 import { Routes, RouterModule } from '@angular/router';
 
-import { MdcTypographyModule } from '@angular-mdc/web';
+import { MdcTypographyModule, MdcButtonModule } from '@angular-mdc/web';
 
 const routes: Routes = [
   {
@@ -19,7 +19,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MdcTypographyModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MdcButtonModule
   ]
 })
 export class HomeModule { }
