@@ -1,8 +1,6 @@
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 import { Router } from '@angular/router';
-import { formatDistanceStrict } from 'date-fns/esm';
 
 @Component({
   selector: 'app-homescreen',
@@ -12,35 +10,30 @@ import { formatDistanceStrict } from 'date-fns/esm';
 export class HomescreenComponent implements OnInit {
 
   time: string;
-  hide = true;
 
   constructor(
-    private afStore: AngularFirestore,
-    private route: Router
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    this.afStore.collection('info').doc('info').get().subscribe(x => {
-      this.hide = false;
+    interval(1000).subscribe(() => {
+      const startdate = new Date('2018-12-13 23:50:00'); // TODO
+      const now = new Date();
 
-      if (x.data()['startdate'].toDate().getTime() > new Date().getTime()) {
-        interval(1000).subscribe(() => {
-          if (x.data()['startdate'].toDate().getTime() < new Date().getTime()) {
-            this.route.navigate(['/login']);
-          }
+      const distance = startdate.getTime() - now.getTime();
 
-          this.time = formatDistanceStrict(
-            x.data()['startdate'].toDate(),
-            new Date(),
-            {includeSeconds: true, roundingMethod: 'floor'}
-          );
-        });
-      } else if (x.data()['enddate'].toDate().getTime() < new Date().getTime()) {
-        this.route.navigate(['/after']);
-      } else {
-        this.route.navigate(['/login']);
+      if (distance < 0) {
+        this.router.navigate(['/login']);
       }
+
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      this.timestring = hours.toString().padStart(2, '0') + ':' +
+        minutes.toString().padStart(2, '0') + ':' +
+        seconds.toString().padStart(2, '0');
     });
   }
 
