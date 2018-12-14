@@ -54,7 +54,7 @@ export class CompetitionscreenComponent implements OnInit {
     this.store.dispatch(new solutionActions.Query());
 
     interval(1000).subscribe(() => {
-      const enddate = new Date('2018-12-13 23:52:00'); // TODO
+      const enddate = new Date('2018-12-14 17:00:00'); // TODO
       const now = new Date();
 
       const distance = enddate.getTime() - now.getTime();
