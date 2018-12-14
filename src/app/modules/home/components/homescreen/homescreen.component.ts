@@ -18,7 +18,7 @@ export class HomescreenComponent implements OnInit {
 
   ngOnInit() {
     interval(1000).subscribe(() => {
-      const startdate = new Date('2018-12-13 23:50:00'); // TODO
+      const startdate = new Date('2018-12-14 13:00:00'); // TODO
       const now = new Date();
 
       const distance = startdate.getTime() - now.getTime();
