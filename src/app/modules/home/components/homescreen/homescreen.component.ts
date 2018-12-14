@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HomescreenComponent implements OnInit {
 
-  time: string;
+  timestring: string;
 
   constructor(
     private router: Router
