@@ -50,3 +50,20 @@ def get_collection(db, collection_name, fresh):
         delete_collection(collection, 10)
         log("Deleted all entries from collection \"{}\"\n".format(collection_name))
     return collection
+
+
+
+def read_team(team_snapshot):
+    name = team_snapshot.get("name")
+    submits = team_snapshot.reference.collection("solutions")
+    solutions = {}
+    for sol in submits.get():
+        solutions[sol.get("id")]=sol.get("solution")
+    return name, solutions
+
+def read_teams(teams_handle):
+    teams = []
+    for team in teams_handle.get():
+        name, submited = read_team(team)
+        teams.append({"name":name, "submits":submited})
+    return teams

@@ -2,6 +2,8 @@ import utils
 import csv
 import argparse
 
+import traceback
+
 def read_correct_solutions(solutions_file):
     correct_solutions = {}
     with open(solutions_file, newline='') as csvfile:
@@ -12,15 +14,8 @@ def read_correct_solutions(solutions_file):
 
 
 
-def read_team(team_snapshot):
-    name = team_snapshot.get("name")
-    submits = team_snapshot.reference.collection("solutions")
-    solutions = {}
-    for sol in submits.get():
-        solutions[sol.get("id")]=sol.get("solution")
-    return name, solutions
 
-def generate_report(submits, correct):
+def generate_team_report(submits, correct):
     correct_answers = {}
     points = 0
     for id in correct:
@@ -31,17 +26,15 @@ def generate_report(submits, correct):
                 points += 1
     return points, correct_answers
 
-def process_teams(teams_handle, correct):
+def generate_report(teams_handle, correct):
+    teams_raw = utils.read_teams(teams_handle)
     teams = []
-
-    for team in teams_handle.get():
-        name, submited = read_team(team)
-        points, breakdown = generate_report(submited, correct)
-        teams.append({"name":name, "points":points, "breakdown": breakdown})
+    for team in teams_raw:
+        points, breakdown = generate_team_report(team["submits"], correct)
+        teams.append({"name":team["name"], "points":points, "breakdown": breakdown})
 
     teams.sort(key=lambda x: x["points"], reverse=True)
     return teams
-
 
 def write_report(report, filename, heading):
     with open(filename, "w", newline="") as csvfile:
@@ -52,14 +45,13 @@ def write_report(report, filename, heading):
             breakdown = team["breakdown"]
             breakdown = [1 if breakdown[i] else 0 for i in sorted(breakdown.keys())]
             writer.writerow([team["name"], team["points"], *breakdown])
-            
 
 
 def main():
     DEFAULTS = {
                 "key": "./serviceAccountKey.json",
                 }
-    
+
     parser = argparse.ArgumentParser(description='Check teams answers, sort teams by score', epilog="Made by László Baráth (Sasszem), 2018")
     parser.add_argument('solutions', help='Solutions CSV file')
     parser.add_argument('report', help='Report CSV file')
@@ -71,7 +63,7 @@ def main():
 
     db = utils.make_connection(args.key)
     correct = read_correct_solutions(args.solutions)
-    report = process_teams(db.collection("teams"), correct)
+    report = generate_report(db.collection("teams"), correct)
     write_report(report, args.report, args.heading)
 
 if __name__=="__main__":
